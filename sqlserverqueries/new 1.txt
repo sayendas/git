@@ -1,0 +1,118 @@
+create sequence item_counter
+as int
+start with 2 
+increment by 5;
+
+select next value for item_counter;
+
+create table purchas_orders(
+order_id int primary key,
+vendor_id int not null,
+order_date date not null);
+
+create sequence order_number
+as int
+start with 1
+increment by 1;
+
+insert into purchas_orders(order_id,vendor_id,order_date)
+values(next value for order_number,1,'2019-04-03');
+
+INSERT INTO purchas_orders
+    (order_id,
+    vendor_id,
+    order_date)
+VALUES
+    (NEXT VALUE FOR order_number,2,'2019-05-01');
+ 
+ 
+INSERT INTO purchas_orders
+    (order_id,
+    vendor_id,
+    order_date)
+VALUES
+    (NEXT VALUE FOR order_number,3,'2019-05-02');
+
+SELECT 
+    order_id, 
+    vendor_id, 
+    order_date
+FROM 
+    purchas_orders;
+
+CREATE SEQUENCE receipt_no
+START WITH 1
+INCREMENT BY 1;
+
+create table goods_receipts
+(
+ receipt_id int primary key default(next value for receipt_no),
+ order_id int not null,
+  full_receipt bit not null,
+    receipt_date date not null,
+    note nvarchar(100),
+);
+
+create table invoice_receipts
+(
+ receipt_id int primary key
+        default (next value for receipt_no), 
+    order_id int not null, 
+    is_late bit not null,
+    receipt_date date not null,
+    note nvarchar(100)
+);
+
+INSERT INTO goods_receipts(
+    order_id, 
+    full_receipt,
+    receipt_date,
+    note
+)
+VALUES(
+    1,
+    1,
+    '2019-05-12',
+    'Goods receipt completed at warehouse'
+);
+INSERT INTO goods_receipts(
+    order_id, 
+    full_receipt,
+    receipt_date,
+    note
+)
+VALUES(
+    1,
+    0,
+    '2019-05-12',
+    'Goods receipt has not completed at warehouse'
+);
+ 
+INSERT INTO invoice_receipts(
+    order_id, 
+    is_late,
+    receipt_date,
+    note
+)
+VALUES(
+    1,
+    0,
+    '2019-05-13',
+    'Invoice duly received'
+);
+INSERT INTO invoice_receipts(
+    order_id, 
+    is_late,
+    receipt_date,
+    note
+)
+VALUES(
+    2,
+    0,
+    '2019-05-15',
+    'Invoice duly received'
+);
+
+select * from goods_receipts;
+
+select * from invoice_receipts;

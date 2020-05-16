@@ -1,0 +1,33 @@
+create function udffindbymodelyear(@model_year int)
+returns table
+as
+return
+select
+product_name,
+model_year,
+list_price
+from 
+production1.products
+where
+model_year=@model_year;
+
+select *
+from udffindbymodelyear(2011);
+
+
+alter function udffindbymodelyear(@start_year int,@end_year int)
+returns table
+as
+return
+select
+product_name,
+model_year,
+list_price
+from 
+production1.products
+where
+model_year>=@start_year and model_year<=@end_year;
+
+select *
+from udffindbymodelyear(2011,2014);
+

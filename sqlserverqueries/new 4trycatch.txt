@@ -1,0 +1,93 @@
+create proc usp_divide(@a decimal,@b decimal,@c decimal output)
+as
+begin
+begin try
+set @c=@a/@b;
+end try
+begin catch
+select
+ERROR_LINE() as lineerror,
+ERROR_MESSAGE() as errormessage,
+ERROR_NUMBER() as errornumber,
+ERROR_PROCEDURE() as errorprocedure,
+ERROR_SEVERITY() as errorseverity,
+ERROR_STATE() as errorstate
+end catch
+end;
+
+declare @r decimal;
+exec usp_divide 12,2,@r output;
+print @r;
+
+declare @r2 decimal;
+exec usp_divide 12,0,@r2 output;
+print @r2;
+
+
+
+
+create schema sales;
+
+create table sales.persons
+(person_id int primary key identity,
+ first_name varchar(100) not null,
+ last_name varchar(100) not null 
+);
+
+create table sales.deals
+(deal_id int primary key identity,
+ person_id int not null,
+ deal_note varchar(100),
+ foreign key(person_id) references sales.persons(person_id)
+);
+
+insert into sales.persons(first_name,last_name)
+values
+('John','Doe'),
+('Jane','Doe');
+
+insert into sales.deals(person_id,deal_note)
+values
+(1,'Deal for John');
+
+create proc usp_report_error
+as
+select
+ ERROR_NUMBER() AS ErrorNumber  
+ ,ERROR_SEVERITY() AS ErrorSeverity  
+ ,ERROR_STATE() AS ErrorState  
+ ,ERROR_LINE () AS ErrorLine  
+ ,ERROR_PROCEDURE() AS ErrorProcedure  
+ ,ERROR_MESSAGE() AS ErrorMessage;  
+
+
+ create proc usp_delete_person(@person_id int)
+ as
+ begin
+ begin try
+ begin transaction;
+ delete from sales.persons
+ where person_id=@person_id;
+ commit transaction;
+ end try
+ begin catch
+ exec usp_report_error;
+ if(XACT_STATE())=-1
+ begin
+ print 'rolling back transaction'
+ rollback transaction;
+ end;
+if(XACT_STATE())=1
+ begin
+ print 'commiting transaction'
+ commit transaction;
+ end;
+ end catch
+ end;
+
+ exec usp_delete_person 2;
+
+ select * from sales.persons;
+
+ exec usp_delete_person 1;
+

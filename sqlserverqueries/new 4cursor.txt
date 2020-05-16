@@ -1,0 +1,28 @@
+declare 
+@product_name varchar(max),
+@list_price int;
+
+declare cursor_product cursor
+for select
+product_name,
+list_price
+from
+production1.products;
+
+open cursor_product;
+
+fetch next from cursor_product into
+@product_name,
+@list_price;
+
+while @@FETCH_STATUS=0
+begin
+print @product_name  + cast(@list_price as varchar);
+fetch next from cursor_product into
+@product_name,
+@list_price;
+end;
+
+close cursor_product;
+
+deallocate cursor_product;

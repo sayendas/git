@@ -1,0 +1,16 @@
+create table xyz(Id int primary key,Name varchar(30) not null,Mob bigint);
+
+alter table xyz
+drop column Id; 
+
+alter table xyz
+drop column Name;
+
+alter table xyz
+drop constraint PK__xyz__3214EC0711AC350B;
+
+alter table xyz
+add unique (Mob);
+
+alter table xyz
+add constraint UC_xyza unique (Id,Mob);

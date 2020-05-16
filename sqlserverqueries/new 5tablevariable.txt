@@ -1,0 +1,36 @@
+create table brands
+(brand_id int,
+ brand_name varchar(25) 
+);
+
+insert into brands
+values
+(2,'oralb'),(3,'colgate'),(4,'liril'),(5,'pepsodent');
+
+
+
+declare @product_table table
+(product_name varchar(max) not null,
+ product_id int not null,
+ list_price decimal(10,2) not null
+);
+
+insert into @product_table
+select
+product_name,
+product_id,
+list_price
+from 
+production.products;
+
+select *
+from @product_table;
+
+
+select
+product_name,product_id,brand_name,list_price
+from
+brands b
+inner join @product_table p on b.brand_id=p.product_id;
+
+

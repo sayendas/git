@@ -1,0 +1,150 @@
+create database sd;
+
+use sd;
+
+create schema production;
+
+create table products
+(product_id int primary key,
+ product_name varchar(15),
+ list_price int
+);
+
+
+create table production.products
+(product_id int primary key,
+ product_name varchar(15),
+ list_price int
+);
+
+insert into production.products 
+values
+(1,'soap',123),(2,'toothbrush',34),(3,'toothpaste',200);
+
+select
+ product_name, 
+ list_price
+from
+ production.products
+order by 
+ product_name;
+
+ create procedure uspproductlist
+ as
+ begin
+ select
+ product_name, 
+ list_price
+ from
+ production.products
+ order by 
+ product_name
+ end;
+
+ exec uspproductlist;
+
+ alter procedure uspproductlist
+ as
+ begin
+ select
+ product_name, 
+ list_price
+ from
+ production.products
+ order by 
+ list_price
+ end;
+
+ exec uspproductlist;
+
+ drop procedure uspproductlist;
+
+ create procedure uspproductlist
+ as
+ begin
+ select
+ product_name, 
+ list_price
+ from
+ production.products
+ order by 
+ product_name
+ end;
+
+ create procedure uspproductlist2(@min_list_price as int)
+ as
+ begin
+ select
+ product_name, 
+ list_price
+ from
+ production.products
+ where
+ list_price>=@min_list_price
+ order by 
+ product_name
+ end;
+
+ exec uspproductlist2 50;
+
+ create procedure uspproductlist3(@min_list_price as int,@max_list_price as int)
+ as
+ begin
+ select
+ product_name, 
+ list_price
+ from
+ production.products
+ where
+ list_price>=@min_list_price and
+ list_price<=@max_list_price 
+ order by 
+ product_name
+ end;
+
+ exec uspproductlist3 50,150;
+
+ exec uspproductlist3 
+ @min_list_price=50,@max_list_price=150;
+
+ insert into production.products
+ values(4,'soap',45),(5,'toothbrush',150),(6,'toothpaste',300);
+
+ create procedure uspproductlist4(@min_list_price as int,@max_list_price as int,@name as varchar(max))
+ as
+ begin
+ select
+ product_name, 
+ list_price
+ from
+ production.products
+ where
+ list_price>=@min_list_price and
+ list_price<=@max_list_price and
+ product_name like '%' + @name + '%'
+ order by 
+ product_name
+ end;
+
+ exec uspproductlist4
+ @min_list_price=50,@max_list_price=200,@name='tooth';
+
+ create procedure uspproductlist5(@min_list_price as int=12,@max_list_price as int=250,@name as varchar(max))
+ as
+ begin
+ select
+ product_name, 
+ list_price
+ from
+ production.products
+ where
+ list_price>=@min_list_price and
+ list_price<=@max_list_price and
+ product_name like '%' + @name + '%'
+ order by 
+ product_name
+ end;
+
+ exec uspproductlist5
+ @name='tooth';
+

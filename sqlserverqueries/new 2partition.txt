@@ -1,0 +1,192 @@
+create database PartSample;
+
+use PartSample;
+
+alter database PartSample 
+add filegroup January;
+
+alter database PartSample 
+add filegroup February;
+
+alter database PartSample 
+add filegroup March;
+
+alter database PartSample 
+add filegroup April;
+
+alter database PartSample 
+add filegroup May;
+
+alter database PartSample 
+add filegroup June;
+
+alter database PartSample 
+add filegroup July;
+
+alter database PartSample 
+add filegroup August;
+
+alter database PartSample 
+add filegroup September;
+
+alter database PartSample 
+add filegroup October;
+
+alter database PartSample 
+add filegroup November;
+
+alter database PartSample 
+add filegroup December;
+
+select * from sys.filegroups;
+
+select name as [file group name]
+from sys.filegroups
+where type='FG';
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartJan],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartJan.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [January]
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartFeb],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartFeb.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [February]
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartMarch],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartMarch.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [March]
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartApril],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartApril.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [April]
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartMay],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartMay.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [May]
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartJune],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartJune.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [June]
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartJuly],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartJuly.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [July]
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartAug],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartAug.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [August]
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartSept],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartSept.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [September]
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartOct],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartOct.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [October]
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartNov],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartNov.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [November]
+
+ALTER DATABASE [PartSample]
+    ADD FILE 
+    (
+    NAME = [PartDec],
+    FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\PartDec.ndf',
+        SIZE = 5080 KB, 
+        MAXSIZE = UNLIMITED, 
+        FILEGROWTH = 2040 KB
+    ) TO FILEGROUP [December]
+
+select * from sys.database_files;
+
+select name as [partion name],physical_name as [path name]
+from sys.database_files
+where type_desc='ROWS';
+
+create partition function [MonthlyPartition] (datetime)
+as range right for values('20180201','20180301','20180401','20180501','20180601','20180701','20180801','20180901','20181001','20181101','20181201');
+
+create partition scheme MonthWisePartition
+as partition MonthlyPartition to (January,February,March,April,May,June,July,August,September,October,November,December);
+
+create table sqlinsert
+ (empid int identity(1,1) not null,
+  firstname nvarchar(255) null,
+  lastname nvarchar(255) null,
+  occupation nvarchar(255) null,
+  yearlyincome float null,
+  sales float null,
+  insertdate datetime null
+  )on MonthWisePartition(insertdate);
+ 
+insert into sqlinsert
+values('a','b','dag',10000.89,10,GETDATE()),('c','d','app',12345.67,20,DATEADD(month,1,GETDATE()));
+
+select * from sqlinsert;

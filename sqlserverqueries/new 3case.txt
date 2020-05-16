@@ -1,0 +1,15 @@
+create table employeee
+(Id int primary key identity(1,1),
+ Gender int);
+
+insert into employeee(Gender) values
+(0),(1),(0),(0),(1);
+
+select Id,Gender,
+case Gender
+when 0 then 'Male'
+when 1 then 'Female'
+end
+as 'Gender_type'
+from employeee;
+

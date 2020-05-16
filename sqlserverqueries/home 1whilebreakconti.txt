@@ -1,0 +1,31 @@
+declare @count int=1;
+
+while @count<=5
+begin
+print @count
+set @count=@count+1
+end;
+
+
+declare @count2 int=0;
+
+while @count2<5
+begin
+set @count2=@count2+1;
+if @count2=4
+break;
+print @count2;
+end;
+
+
+
+declare @count3 int=0;
+
+while @count3<5
+begin
+set @count3=@count3+1;
+if @count3=4
+continue;
+print @count3;
+end;
+

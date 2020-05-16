@@ -1,0 +1,33 @@
+begin
+select
+product_id,
+product_name
+from 
+production1.products
+where
+list_price<100;
+
+if @@ROWCOUNT=0
+print 'no product found below RS 100';
+end
+
+
+begin
+declare @name varchar(max);
+
+select top 1
+@name=product_name
+from
+production1.products
+order by list_price desc;
+
+if @@ROWCOUNT <> 0
+begin
+print 'the most expensive product is ' + @name
+end
+else
+begin
+print 'no product found'
+end;
+end
+

@@ -1,0 +1,47 @@
+create schema production1;
+
+
+create table production1.products
+(product_id int primary key,
+ product_name varchar(20),
+ list_name int,
+ model_year int
+);
+
+
+insert into production1.products
+values
+(1,'i10',230567,2011);
+
+insert into production1.products
+values
+(2,'i20',260567,2014),(3,'hondacity',344444,2011),(4,'swift',200000,2010),(5,'nano',120000,2017),(6,'polo',222222,2012),(7,'beetle',150000,2014),
+(8,'dzire',255555,2014),(9,'verna',233333,2011),(10,'vento',262345,2014);
+
+sp_rename 'sd.production1.products.list_name','list_price','COLUMN';
+
+select* from production1.products;
+
+
+create proc uspfindproductbymodelyear(
+@model_year int,
+@product_count int output)
+as
+begin
+select
+product_name,list_price
+from 
+production1.products
+where
+model_year=@model_year;
+
+select @product_count=@@ROWCOUNT;
+end;
+
+declare @count int;
+
+exec uspfindproductbymodelyear
+@model_year=2011,
+@product_count=@count output;
+
+select @count as 'Number of products found';

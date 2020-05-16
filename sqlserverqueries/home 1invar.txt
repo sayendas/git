@@ -1,0 +1,28 @@
+declare @list_price as int;
+
+set @list_price=45;
+
+select *
+from production.products
+where list_price=@list_price;
+
+declare @list_price1 as int,
+        @product_name as varchar(max);
+
+set @list_price1=200;
+set @product_name='toothpaste';
+
+select *
+from production.products
+where list_price<=@list_price1 and product_name>=@product_name;
+
+declare @product_count as int;
+
+set @product_count=(
+select count(*)
+from production.products);
+
+print @product_count;
+
+print 'The number of products are '+cast(@product_count as varchar(max));
+

@@ -1,0 +1,27 @@
+create synonym products11 for sd.production1.products; 
+
+select * from products11;
+
+select * from production1.products;
+
+
+
+create synonym products22 for production.products; 
+
+select * from products22;
+
+select * from production.products;
+
+
+select
+name,
+base_object_name,
+type
+from 
+sys.synonyms
+order by name;
+
+
+
+drop synonym products11;
+drop synonym products22;

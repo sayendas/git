@@ -1,0 +1,49 @@
+exec sp_addmessage
+@msgnum=50050,
+@severity=1,
+@msgtext='An error occured';
+
+select *
+from sys.messages
+where message_id=50050;
+
+raiserror(50050,1,1);
+
+exec sp_dropmessage
+@msgnum=50050;
+
+
+raiserror('Whoops an error occurred',1,1);
+
+
+
+declare
+@errormessage varchar(100),
+@errorseverity int,
+@errorstate int;
+
+begin try
+raiserror('an errors occurred',17,1);
+end try
+begin catch
+select
+@errormessage=ERROR_MESSAGE(),
+@errorseverity=ERROR_SEVERITY(),
+@errorstate=ERROR_STATE();
+raiserror(@errormessage,@errorseverity,@errorstate);
+end catch;
+
+
+
+declare @messagetext varchar(100);
+set @messagetext=N'Cant delete sales order %s';
+
+raiserror(
+@messagetext,
+16,
+1,
+N'2001'
+);
+
+
+

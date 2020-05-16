@@ -1,0 +1,29 @@
+create table t1
+(id int primary key
+);
+
+begin try
+insert into t1(id)
+values (1);
+
+insert into t1(id)
+values (1);
+
+end try
+begin catch
+print('raise error again');
+throw;
+end catch
+
+
+
+exec sys.sp_addmessage
+@msgnum=50010,
+@severity=16,
+@msgtext=
+N'The order number %s cant be deleted bcoz it doesnt exist',
+@lang='us_english';
+
+declare @messagetext varchar(200);
+set @messagetext=FORMATMESSAGE(50010,N'1002');
+throw 50010,@messagetext,1;

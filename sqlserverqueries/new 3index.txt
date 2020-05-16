@@ -1,0 +1,60 @@
+create schema production;
+
+create table abc.production.parts(part_id int not null,part_name varchar(100) not null);
+
+insert into production.parts values
+(1,'Frame'),
+(2,'Head Tube'),
+(3,'Handlebar Grip'),
+(4,'Shock Absorber'),
+(5,'Fork');
+
+select * from production.parts where part_id=3;
+
+create table production.part_prices(
+    part_id int,
+    valid_from date,
+    price decimal(18,4) not null,
+	primary key(part_id,valid_from));
+
+create table production.part_prices1(
+    part_id int,
+    valid_from date,
+    price decimal(18,4) not null);
+
+create clustered index ix_parts_id
+ON production.part_prices1 (part_id);  
+
+drop index production.part_prices1.ix_valid_from;
+
+create unique index ix_parts_id1
+ON production.part_prices1 (part_id);  
+
+create index ix_parts_id2
+ON production.part_prices1 (part_id);  
+
+insert into production.part_prices1 values(4,'2011-05-12',123.4),(1,'2010-09-12',234.7);
+
+select * from production.part_prices1;
+
+alter index ix_parts_id
+on production.part_prices1
+disable;
+
+alter index all 
+on production.part_prices1
+disable;
+
+alter index ix_parts_id
+on production.part_prices1
+rebuild;
+
+alter index all
+on production.part_prices1
+rebuild;
+
+drop index ix_parts_id
+on production.part_prices1;
+
+drop index ix_parts_id1 on production.part_prices1,
+ix_parts_id2 on production.part_prices1;

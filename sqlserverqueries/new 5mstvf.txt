@@ -1,0 +1,58 @@
+create table staff
+(id int primary key,
+first_name varchar(10),
+last_name varchar(10),
+email varchar(20),
+phone varchar(10),
+contact_type varchar(10)
+);
+
+insert into staff
+values(1,'a','b','a@gmail.com','1234567890','staff'),(2,'c','d','c@gmail.com','0987654321','staff');
+
+create table customer
+(id int primary key,
+first_name varchar(10),
+last_name varchar(10),
+email varchar(20),
+phone varchar(10),
+contact_type varchar(10)
+);
+
+insert into customer
+values(1,'w','x','w@gmail.com','2234567890','customer'),(2,'y','z','y@gmail.com','9987654321','customer');
+
+
+
+create function udfallrec()
+returns @contacts table
+(first_name varchar(10),
+last_name varchar(10),
+email varchar(20),
+phone varchar(10),
+contact_type varchar(10)
+)
+as
+begin
+insert into @contacts
+select
+first_name,
+last_name,
+email,
+phone,
+'staff'
+from staff;
+
+insert into @contacts
+select
+first_name,
+last_name,
+email,
+phone,
+'customer'
+from customer;
+return;
+end;
+
+select *
+from udfallrec();
