@@ -1,0 +1,36 @@
+db.students.find({age:16})  //display a particular record based on a condition//
+
+//result//
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c1"), "studentname" : "B", "rollno" : 102, "age" : 16 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c2"), "studentname" : "C", "rollno" : 103, "age" : 16 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c3"), "studentname" : "D", "rollno" : 104, "age" : 16 }
+
+
+db.students.findOne({age:16})  //display only one record based on condition//
+
+//result//
+{
+        "_id" : ObjectId("5ec384ef52d3240a6d3565c1"),
+        "studentname" : "B",
+        "rollno" : 102,
+        "age" : 16
+}
+
+
+
+db.students.find({age:16,rollno:104})  //displaying records based on multiple conditions//
+
+//result//
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c3"), "studentname" : "D", "rollno" : 104, "age" : 16 }
+
+
+
+
+db.students.find({},{age:1})        //display only age in find//
+
+//result//
+{ "_id" : ObjectId("5ec383ed52d3240a6d3565c0"), "age" : 15 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c1"), "age" : 16 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c2"), "age" : 16 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c3"), "age" : 16 }
+

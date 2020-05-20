@@ -1,0 +1,11 @@
+db.students.update(           //update only one record,even if multiple records match//
+... {age:16},
+... {$set:{studentname:"E"}
+... })
+
+
+
+db.students.update( {age:16}, {$set:{studentname:"F"}},{multi:true} )     //update all records based on condition//
+
+
+

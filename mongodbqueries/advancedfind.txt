@@ -1,0 +1,21 @@
+db.students.find({age:{$gte:15}})  //displaying records using find and conditional operator//
+
+//result//
+{ "_id" : ObjectId("5ec383ed52d3240a6d3565c0"), "studentname" : "A", "rollno" : 101, "age" : 15 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c1"), "studentname" : "B", "rollno" : 102, "age" : 16 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c2"), "studentname" : "C", "rollno" : 103, "age" : 16 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c3"), "studentname" : "D", "rollno" : 104, "age" : 16 }
+
+
+db.students.find({$or:[{studentname:"A"},{rollno:103}]})   //conditional or operator with find//
+
+//result//
+{ "_id" : ObjectId("5ec383ed52d3240a6d3565c0"), "studentname" : "A", "rollno" : 101, "age" : 15 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c2"), "studentname" : "C", "rollno" : 103, "age" : 16 }
+
+
+db.students.find({age:16,$or:[{rollno:102},{rollno:103}]})   //combination of and and or operators//
+
+//result//
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c1"), "studentname" : "B", "rollno" : 102, "age" : 16 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c2"), "studentname" : "C", "rollno" : 103, "age" : 16 }

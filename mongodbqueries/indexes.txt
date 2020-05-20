@@ -1,0 +1,17 @@
+for(i=0;i<10000;++i){ db.posts.insert({studentid:i,name:"Mark"})}   //insert records with for loop//
+
+db.posts.ensureIndex({studentid:1})  //adding index in db//
+
+//result//
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 1,
+        "numIndexesAfter" : 2,
+        "ok" : 1
+}
+
+
+db.posts.dropIndex({studentid:1})     //dropping index from db//
+
+//result//
+{ "nIndexesWas" : 2, "ok" : 1 }

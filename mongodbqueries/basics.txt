@@ -1,0 +1,13 @@
+show dbs //show dbs in mongodb//
+
+use mydb //create new database//
+
+db.dropDatabase() //drop database in mongodb//
+
+db.createCollection("students") //create new collection//
+
+show collections //show collections in current database//
+
+db.schools.drop() //drop collections in current db//
+
+ 

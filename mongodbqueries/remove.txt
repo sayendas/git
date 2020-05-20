@@ -1,0 +1,4 @@
+db.students.remove({age:15})     //remove record based on condition, this will remove all the records on which condition match//
+
+
+db.students.remove({age:16},1)   //remove only one record, even if multiple records match the condition, number of records to be deleted can be adjusted by giving the number//

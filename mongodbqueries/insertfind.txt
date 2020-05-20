@@ -1,0 +1,67 @@
+db.students.insert(       //insert one record//
+... {
+...   "studentname":"A",
+...   "rollno":101,
+...   "age":15
+... }
+... )
+
+
+db.students.insert( [{   "studentname":"B",   "rollno":102,   "age":16 },      //insert multiple records//
+                        {"studentname":"C","rollno":103,"age":16},
+                        {"studentname":"D","rollno":104,"age":16}] )        
+
+
+
+db.students.find()     //see all records
+
+//result//
+{ "_id" : ObjectId("5ec383ed52d3240a6d3565c0"), "studentname" : "A", "rollno" : 101, "age" : 15 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c1"), "studentname" : "B", "rollno" : 102, "age" : 16 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c2"), "studentname" : "C", "rollno" : 103, "age" : 16 }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c3"), "studentname" : "D", "rollno" : 104, "age" : 16 }
+
+
+db.students.findOne()  //find only one record//
+
+//result//
+{
+        "_id" : ObjectId("5ec383ed52d3240a6d3565c0"),
+        "studentname" : "A",
+        "rollno" : 101,
+        "age" : 15
+}
+
+
+
+db.students.find().pretty()  //display records in a pretty way//
+
+//result//
+{
+        "_id" : ObjectId("5ec383ed52d3240a6d3565c0"),
+        "studentname" : "A",
+        "rollno" : 101,
+        "age" : 15
+}
+{
+        "_id" : ObjectId("5ec384ef52d3240a6d3565c1"),
+        "studentname" : "B",
+        "rollno" : 102,
+        "age" : 16
+}
+{
+        "_id" : ObjectId("5ec384ef52d3240a6d3565c2"),
+        "studentname" : "C",
+        "rollno" : 103,
+        "age" : 16
+}
+{
+        "_id" : ObjectId("5ec384ef52d3240a6d3565c3"),
+        "studentname" : "D",
+        "rollno" : 104,
+        "age" : 16
+}
+
+
+
+

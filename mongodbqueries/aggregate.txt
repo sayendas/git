@@ -1,0 +1,20 @@
+db.students.aggregate([{$group:{_id:"$gender",MyResult:{$sum:1}}}])   //group records based on gender values and sum of the records based on value//
+
+//result//
+{ "_id" : "F", "MyResult" : 3 }
+{ "_id" : "M", "MyResult" : 3 }
+
+
+db.students.aggregate([{$group:{_id:"$gender",MaxAge:{$max:"$age"}}}])   //group records based on max age of gender values//
+
+//result//
+{ "_id" : "F", "MaxAge" : 20 }
+{ "_id" : "M", "MaxAge" : 19 }
+
+
+db.students.aggregate([{$group:{_id:"$gender",MinAge:{$min:"$age"}}}])   //group records based on min age of gender values//
+
+//result//
+{ "_id" : "F", "MinAge" : 13 }
+{ "_id" : "M", "MinAge" : 16 }
+

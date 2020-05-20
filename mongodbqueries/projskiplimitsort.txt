@@ -1,0 +1,66 @@
+db.students.find({},{gender:1})    //display only gender in find, -id will be displayed//
+
+//result//
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c2"), "gender" : "M" }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c3"), "gender" : "F" }
+{ "_id" : ObjectId("5ec4bc43dc27a3ba84620a69"), "gender" : "M" }
+{ "_id" : ObjectId("5ec4bcfadc27a3ba84620a6a"), "gender" : "F" }
+{ "_id" : ObjectId("5ec4bd7edc27a3ba84620a6b"), "gender" : "M" }
+{ "_id" : ObjectId("5ec4bd90dc27a3ba84620a6c"), "gender" : "F" }
+
+
+db.students.find({},{gender:1,_id:0})    //display only required field without _id field//
+
+//result//
+{ "gender" : "M" }
+{ "gender" : "F" }
+{ "gender" : "M" }
+{ "gender" : "F" }
+{ "gender" : "M" }
+{ "gender" : "F" }
+
+
+db.students.find({},{gender:1}).skip(2)    //skip 2 records, and display other records//
+
+//result//
+{ "_id" : ObjectId("5ec4bc43dc27a3ba84620a69"), "gender" : "M" }
+{ "_id" : ObjectId("5ec4bcfadc27a3ba84620a6a"), "gender" : "F" }
+{ "_id" : ObjectId("5ec4bd7edc27a3ba84620a6b"), "gender" : "M" }
+{ "_id" : ObjectId("5ec4bd90dc27a3ba84620a6c"), "gender" : "F" }
+
+
+db.students.find({},{gender:1}).limit(2)    //display only limited records//
+
+//result//
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c2"), "gender" : "M" }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c3"), "gender" : "F" }
+
+
+db.students.find({},{gender:1}).skip(4).limit(2)    //skip some records and then limit the resultset//
+
+//result//
+{ "_id" : ObjectId("5ec4bd7edc27a3ba84620a6b"), "gender" : "M" }
+{ "_id" : ObjectId("5ec4bd90dc27a3ba84620a6c"), "gender" : "F" }
+
+
+db.students.find({},{gender:1,age:1}).sort({age:1})   //sort in asc order based on age//
+
+//result//
+{ "_id" : ObjectId("5ec4bcfadc27a3ba84620a6a"), "age" : 13, "gender" : "F" }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c2"), "age" : 16, "gender" : "M" }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c3"), "age" : 16, "gender" : "F" }
+{ "_id" : ObjectId("5ec4bc43dc27a3ba84620a69"), "age" : 18, "gender" : "M" }
+{ "_id" : ObjectId("5ec4bd7edc27a3ba84620a6b"), "age" : 19, "gender" : "M" }
+{ "_id" : ObjectId("5ec4bd90dc27a3ba84620a6c"), "age" : 20, "gender" : "F" }
+
+
+db.students.find({},{gender:1,age:1}).sort({age:-1})    //same but in desc order//
+
+//result//
+{ "_id" : ObjectId("5ec4bd90dc27a3ba84620a6c"), "age" : 20, "gender" : "F" }
+{ "_id" : ObjectId("5ec4bd7edc27a3ba84620a6b"), "age" : 19, "gender" : "M" }
+{ "_id" : ObjectId("5ec4bc43dc27a3ba84620a69"), "age" : 18, "gender" : "M" }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c2"), "age" : 16, "gender" : "M" }
+{ "_id" : ObjectId("5ec384ef52d3240a6d3565c3"), "age" : 16, "gender" : "F" }
+{ "_id" : ObjectId("5ec4bcfadc27a3ba84620a6a"), "age" : 13, "gender" : "F" }
+
